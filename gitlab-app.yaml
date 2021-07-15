@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: xactly-production
+  namespace: tap_xactly
   labels:
     version: "0.1.0"
 spec:
@@ -83,11 +84,11 @@ spec:
             secretKeyRef:
               name: airflow
               key: db_connection
-        # - name: ADMIN_SDK_KEY
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: admin-sdk
-        #       key: service_key
+        - name: ADMIN_SDK_KEY
+          valueFrom:
+            secretKeyRef:
+              name: admin-sdk
+              key: service_key
         - name: AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT
           value: "120"
         - name: AIRFLOW__CORE__EXECUTOR

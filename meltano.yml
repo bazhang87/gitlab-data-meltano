@@ -21,10 +21,11 @@ plugins:
     variant: meltano
     pip_url: git+https://gitlab.com/meltano/target-snowflake
     config:
-      account: aq34540
-      database: COOPER_DB
-      warehouse: COOPER_XS_WH
-      role: SYSADMIN
+      account: gitlab
+      database: RAW
+      warehouse: ENGINEER_XS
+      schema: TAP_XACTLY
+      role: mashey
   orchestrators:
   - name: airflow
     pip_url: psycopg2 apache-airflow==1.10.13 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.13/constraints-3.8.txt

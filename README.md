@@ -62,12 +62,6 @@ In order for the installed Meltano taps to function properly, the following [env
 SF_USER="<USER>"
 SF_PASSWORD="<PASSWORD>"
 
-TAP_SLACK_TOKEN="<SLACK VERIFICATION TOKEN>"
-TAP_ZOOM_JWT="<JWT KEY>"
-
-# The service account key created during the `Tap Gmail` setup for the Admin SDK
-ADMIN_SDK_KEY="/path/to/service_key.json"
-
 AIRFLOW__CORE__SQL_ALCHEMY_CONN="<postgresql://username:password@localhost:5432/mydatabase>"
 AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT="120"
 AIRFLOW__CORE__EXECUTOR="LocalExecutor"

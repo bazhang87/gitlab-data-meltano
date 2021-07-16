@@ -1,0 +1,41 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: 60140d5b-32f1-49b1-aa37-e7a48dd2ec43
+plugins:
+  extractors:
+  - name: tap-xactly
+    namespace: tap_xactly
+    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-xactly
+    executable: tap-xactly
+    capabilities:
+    - catalog
+    - discover
+    - state
+    settings:
+    - name: user
+    - name: password
+    - name: client_id
+    - name: consumer
+  loaders:
+  - name: target-snowflake
+    variant: meltano
+    pip_url: git+https://gitlab.com/meltano/target-snowflake
+    config:
+      account: gitlab
+      database: RAW
+      warehouse: ENGINEER_XS
+      schema: TAP_XACTLY
+      role: mashey
+  orchestrators:
+  - name: airflow
+    pip_url: psycopg2 apache-airflow==1.10.13 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.13/constraints-3.8.txt
+  files:
+  - name: airflow
+    pip_url: git+https://gitlab.com/meltano/files-airflow.git
+schedules:
+- name: xactly-to-snowflake
+  extractor: tap-xactly
+  loader: target-snowflake
+  transform: skip
+  # interval: '@daily'
+  # start_date: 2021-07-13

@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: xactly-production
+  name: gitlab-production
   namespace: tap_xactly
   labels:
-    version: "0.1.0"
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
@@ -19,10 +19,10 @@ spec:
       serviceAccountName: cloud-sql
       containers:
       - name: tap-xactly
-        image: gcr.io/playground-305019/meltano-xactly:production # Change to GitLab GKE
+        image: gcr.io/gitlab-analysis/gitlab-meltano:production
         imagePullPolicy: Always
         env:
-        # Kubernetes Secrets :: Database
+        # Kubernetes Secrets :: Databases
         - name: DB_USER
           valueFrom:
             secretKeyRef:
@@ -41,7 +41,7 @@ spec:
         - name: MELTANO_DATABASE_URI
           valueFrom:
             secretKeyRef:
-              name: meltano
+              name: meltano-db
               key: db_connection
 
         # Kubernetes Secrets :: Xactly
@@ -106,7 +106,7 @@ spec:
 
           # Replace DB_PORT with the port the proxy should listen on
           # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
-          - "-instances=playground-305019:us-central1:meltano=tcp:5432"
+          - "-instances=gitlab-analysis:us-west1:meltano=tcp:5432"
 
           # This flag specifies where the service account key can be found
           - "-credential_file=/secrets/service_account.json"

@@ -16,6 +16,18 @@ plugins:
     - name: password
     - name: client_id
     - name: consumer
+  - name: tap-zengrc
+    namespace: tap_zengrc
+    pip_url: git+https://gitlab.com/gitlab-data/tap-zengrc
+    executable: tap-zengrc
+    capabilities:
+    - discover
+    settings:
+    - name: base_url
+    - name: username
+    - name: password
+    config:
+      base_url: https://gitlab.api.zengrc.com/api/v2
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -24,7 +36,7 @@ plugins:
       account: gitlab
       database: RAW
       warehouse: ENGINEER_XS
-      schema: TAP_XACTLY
+      schema: $TARGET_SNOWFLAKE_SCHEMA
       role: mashey
   orchestrators:
   - name: airflow
@@ -35,6 +47,12 @@ plugins:
 schedules:
 - name: xactly-to-snowflake
   extractor: tap-xactly
+  loader: target-snowflake
+  transform: skip
+  interval: '@daily'
+  start_date: 2021-07-13
+- name: zengrc-to-snowflake
+  extractor: tap-zengrc
   loader: target-snowflake
   transform: skip
   interval: '@daily'

@@ -36,7 +36,6 @@ plugins:
       account: gitlab
       database: RAW
       warehouse: ENGINEER_XS
-      schema: $TARGET_SNOWFLAKE_SCHEMA # this isn't exactly right, but we'll need some way of handling this
       role: mashey
   orchestrators:
   - name: airflow

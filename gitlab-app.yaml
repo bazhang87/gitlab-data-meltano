@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gitlab-production
-  namespace: tap_xactly
+  namespace: default
   labels:
     version: "1.0.0"
 spec:
@@ -15,8 +15,8 @@ spec:
       labels:
         app: tap-xactly
     spec:
-      serviceAccount: cloud-sql
-      serviceAccountName: cloud-sql
+      serviceAccount: default
+      serviceAccountName: default
       containers:
       - name: tap-xactly
         image: gcr.io/gitlab-analysis/gitlab-meltano:production
@@ -84,11 +84,6 @@ spec:
             secretKeyRef:
               name: airflow
               key: db_connection
-        - name: ADMIN_SDK_KEY
-          valueFrom:
-            secretKeyRef:
-              name: admin-sdk
-              key: service_key
         - name: AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT
           value: "120"
         - name: AIRFLOW__CORE__EXECUTOR

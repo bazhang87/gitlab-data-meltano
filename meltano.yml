@@ -28,6 +28,24 @@ plugins:
     - name: password
     config:
       base_url: https://gitlab.api.zengrc.com/api/v2
+      username: ba8d257b840d4b35bbd68a4c7e949766
+      password: c2ceaa83d5c93c9524b62504b2653623fd19c60f7c0b18aeab1ede09a0f6f7df
+  - name: tap-adaptive
+    namespace: tap_adaptive
+    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-adaptive
+    executable: tap-adaptive
+    capabilities:
+    - state
+    - catalog
+    - discover
+    settings:
+    - name: username
+    - name: password
+      kind: password
+    - name: start_date
+      value: '2010-01-01T00:00:00Z'
+    - config:
+      start_date: '2010-01-01T00:00:00Z'
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -56,3 +74,9 @@ schedules:
   transform: skip
   interval: '@daily'
   start_date: 2021-07-13
+- name: adaptive-to-snowflake
+  extractor: tap-adaptive
+  loader: target-snowflake
+  transform: skip
+  interval: '@daily'
+  start_date: 2021-10-01

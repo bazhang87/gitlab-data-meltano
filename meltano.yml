@@ -28,6 +28,8 @@ plugins:
     - name: password
     config:
       base_url: https://gitlab.api.zengrc.com/api/v2
+      username: $ZENGRC_USERNAME
+      password: $ZENGRC_PASSWORD
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -56,3 +58,4 @@ schedules:
   transform: skip
   interval: '@daily'
   start_date: 2021-07-13
+

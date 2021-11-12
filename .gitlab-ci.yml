@@ -17,12 +17,27 @@ variables:
   services:
     - docker:dind
 
+.prod_data_publish: &prod_data_publish
+  <<: *docker_base
+  only:
+    refs:
+      - tags@gitlab-data/gitlab-data-meltano
+    variables:
+      - $CI_COMMIT_TAG =~ /^v*/
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
 # ======
 # Data Image
 # ======
 
 mr_data_build:
-  <<: *docker_base
+  <<: *prod_data_publish
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
@@ -39,21 +54,7 @@ mr_data_build:
     changes:
       - "*.md"
 
-prod_data_publish:
-  <<: *docker_base
-  only:
-    refs:
-      - tags@gitlab-data/gitlab-data-meltano
-    variables:
-      - $CI_COMMIT_TAG =~ /^v*/
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
-    - docker push $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+
 
 
 # ======

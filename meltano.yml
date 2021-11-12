@@ -46,6 +46,7 @@ plugins:
        value: '2010-01-01T00:00:00Z'
     config:
       start_date: '2010-01-01T00:00:00Z'
+      
   loaders:
   - name: target-snowflake
     variant: meltano

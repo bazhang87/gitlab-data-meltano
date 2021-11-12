@@ -83,7 +83,7 @@ mr_image_delete:
     - wget -O /usr/bin/reg https://github.com/genuinetools/reg/releases/download/v0.13.0/reg-linux-amd64
     - chmod +x /usr/bin/reg
   script:
-    - reg -r $CI_REGISTRY -u gitlab-ci-token -p $CI_BUILD_TOKEN rm $CI_REGISTRY_IMAGE/data_image:$CI_COMMIT_REF_NAME || true
+    - reg -r $CI_REGISTRY -u gitlab-ci-token -p $CI_BUILD_TOKEN rm $CI_REGISTRY_IMAGE/gitlab-data-meltano:$CI_COMMIT_REF_NAME || true
   except:
     changes:
       - "*.md"

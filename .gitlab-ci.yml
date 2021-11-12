@@ -1,0 +1,93 @@
+stages:
+  - build
+  - delete
+
+### Global Vars
+variables:
+  DOCKER_DRIVE: overlay2
+
+
+# ======
+# Templates
+# ======
+
+.docker_base: &docker_base
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+
+.prod_docker_publish: &prod_docker_publish
+  <<: *docker_base
+  only:
+    refs:
+      - tags@gitlab-data/gitlab-data-meltano
+    variables:
+      - $CI_COMMIT_TAG =~ /^v*/
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+
+.mr_docker_publish: &mr_docker_publish
+  <<: *docker_base
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME
+
+# ======
+# Meltano Image
+# ======
+
+mr_data_build:
+  <<: *mr_docker_publish
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    on_stop: mr_image_delete
+  variables:
+    IMAGE_NAME: gitlab-data-meltano
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - /*
+  except:
+    changes:
+      - "*.md"
+
+prod_data_publish:
+  <<: *prod_docker_publish
+  variables:
+    IMAGE_NAME: gitlab-data-meltano
+
+# ======
+# Delete Images
+# ======
+
+mr_image_delete:
+  stage: delete
+  image: docker:latest
+  services:
+    - docker:dind
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - wget -O /usr/bin/reg https://github.com/genuinetools/reg/releases/download/v0.13.0/reg-linux-amd64
+    - chmod +x /usr/bin/reg
+  script:
+    - reg -r $CI_REGISTRY -u gitlab-ci-token -p $CI_BUILD_TOKEN rm $CI_REGISTRY_IMAGE/gitlab-data-meltano:$CI_COMMIT_REF_NAME || true
+  except:
+    changes:
+      - "*.md"
+  only:
+    refs:
+      - merge_requests
+  when: manual

@@ -55,7 +55,7 @@ mr_data_build:
     refs:
       - merge_requests
     changes:
-      - gitlab-data-meltano/*
+      - /*
   except:
     changes:
       - "*.md"

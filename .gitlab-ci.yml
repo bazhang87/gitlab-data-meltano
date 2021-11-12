@@ -43,7 +43,7 @@ prod_data_publish:
   <<: *docker_base
   only:
     refs:
-      - tags@gitlab-data/meltano-gitlab
+      - tags@gitlab-data/gitlab-data-meltano
     variables:
       - $CI_COMMIT_TAG =~ /^v*/
   script:

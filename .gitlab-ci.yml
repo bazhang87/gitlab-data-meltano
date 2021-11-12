@@ -16,6 +16,7 @@ variables:
   image: docker:latest
   services:
     - docker:dind
+  when: always
 
 .prod_docker_publish: &prod_docker_publish
   <<: *docker_base

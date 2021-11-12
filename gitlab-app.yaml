@@ -19,7 +19,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: tap-xactly
-        image: gcr.io/gitlab-analysis/gitlab-meltano:production
+        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano/gitlab-data-meltano:v.1.0
         imagePullPolicy: Always
         env:
         # Kubernetes Secrets :: Databases

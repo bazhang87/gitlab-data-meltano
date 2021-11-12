@@ -54,8 +54,6 @@ mr_data_build:
   only:
     refs:
       - merge_requests
-    changes:
-      - /*
   except:
     changes:
       - "*.md"

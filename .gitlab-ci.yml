@@ -17,7 +17,7 @@ variables:
   services:
     - docker:dind
 
-.prod_data_publish: &prod_data_publish
+.prod_docker_publish: &prod_docker_publish
   <<: *docker_base
   only:
     refs:
@@ -32,30 +32,38 @@ variables:
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
     - docker push $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+
+.mr_docker_publish: &mr_docker_publish
+  <<: *docker_base
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_NAME
+
 # ======
-# Data Image
+# Meltano Image
 # ======
 
 mr_data_build:
-  <<: *prod_data_publish
-  script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  <<: *mr_docker_publish
   environment:
     name: review/$CI_COMMIT_REF_NAME
     on_stop: mr_image_delete
+  variables:
+    IMAGE_NAME: gitlab-data-meltano
   only:
     refs:
       - merge_requests
     changes:
-      - Dockerfile
+      - gitlab-data-meltano/*
   except:
     changes:
       - "*.md"
 
-
-
+prod_data_publish:
+  <<: *prod_docker_publish
+  variables:
+    IMAGE_NAME: gitlab-data-meltano
 
 # ======
 # Delete Images

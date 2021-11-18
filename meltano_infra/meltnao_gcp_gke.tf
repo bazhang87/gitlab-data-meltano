@@ -8,6 +8,13 @@ variable "environment" {
     type = string
 }
 
+terraform {
+  backend "gcs" {
+    bucket  = "gitlab-analysis-data-terraform-state"
+    prefix  = "meltano-production/state"
+  }
+}
+
 resource "google_container_cluster" "meltano_cluster" {
     project = "gitlab-analysis"
     location = "us-west1-a"

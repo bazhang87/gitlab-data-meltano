@@ -49,23 +49,30 @@ plugins:
       username: $TAP_ADAPTIVE_USERNAME
       password: $TAP_ADAPTIVE_PASSWORD
   - name: tap-edcast
-    namespace: tap-edcast
-    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-adaptive
-    executable: tap-adaptive
+    namespace: tap_edcast
+    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-edcast
+    executable: tap-edcast.sh
     capabilities:
      - catalog
      - discover
      - state
     settings:
-     - name: username
-     - name: password
-       kind: password
-     - name: start_date
-       value: '2010-01-01T00:00:00Z'
+    - name: username
+      kind: string
+    - name: password
+      kind: password
+    - name: start_date
+      value: '1900-01-01T00:00:00Z'
+    - name: end_date
+      value: '2030-01-01T00:00:00Z'
+    - name: url_base
+      value: 'https://api.domo.com'
     config:
-      start_date: '2010-01-01T00:00:00Z'
-      username: $TAP_ADAPTIVE_USERNAME
-      password: $TAP_ADAPTIVE_PASSWORD
+      username: $TAP_EDCAST_USERNAME
+      password: $TAP_EDCAST_PASSWORD
+      start_date: $TAP_EDCAST_START_DATE
+      end_date: $TAP_EDCAST_END_DATE
+      url_base: $TAP_EDCAST_URL_BASE
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -100,4 +107,10 @@ schedules:
   transform: skip
   interval: '@daily'
   start_date: 2021-10-01
+- name: edcast-to-snowflake
+  extractor: tap-edcast
+  loader: target-snowflake
+  transform: skip
+  interval: '0 7 * * *'
+  start_date: 2019-01-01
 

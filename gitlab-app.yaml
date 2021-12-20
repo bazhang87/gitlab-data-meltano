@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gitlab-production
-  namespace: default
+  name: gitlab-production-meltano
+  namespace: meltano
   labels:
     version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tap-xactly
+      app: meltano-tap
   template:
     metadata:
       labels:
-        app: tap-xactly
+        app: meltano-tap
     spec:
       serviceAccount: default
       serviceAccountName: default
       containers:
-      - name: tap-xactly
+      - name: meltano-tap
         image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.0
         imagePullPolicy: Always
         env:

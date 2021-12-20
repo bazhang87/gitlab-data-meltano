@@ -4,3 +4,8 @@
 app.yaml
 key.json
 .vscode
+**/.terraform/*
+**/.terraform.*
+**/*.tfstate
+**/*.tfstate.*
+plan_to_apply

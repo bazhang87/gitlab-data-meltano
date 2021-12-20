@@ -51,7 +51,7 @@ plugins:
   - name: tap-edcast
     namespace: tap_edcast
     pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-edcast
-    executable: tap-edcast.sh
+    executable: tap-edcast
     capabilities:
      - catalog
      - discover

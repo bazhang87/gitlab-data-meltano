@@ -26,6 +26,7 @@
 Below is a guide on how to set up the Meltano project. Currently these are the taps/targets installed:
 
 * [Tap Xactly](https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-xactly)
+* [Tap EdCast](https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-edcast)
 * [Target Snowflake](https://meltano.com/plugins/loaders/snowflake--meltano.html#snowflake-meltano-variant)
 
 Setup of these taps/targets must be completed before the Meltano project is launched.

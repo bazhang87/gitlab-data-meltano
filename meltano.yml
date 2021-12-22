@@ -82,9 +82,10 @@ plugins:
       database: RAW
       warehouse: LOADING
       role: MELTANO
-  - name: target-snowflake-edcast
+  - name: target-snowflake--edcast
     variant: meltano
-    pip_url: git+https://gitlab.com/gitlab-data/target-snowflake-edcast
+    inherit_from: target-snowflake
+    pip_url: git+https://gitlab.com/gitlab-data/edcast-target-snowflake
     config:
       account: gitlab
       database: RAW
@@ -117,7 +118,7 @@ schedules:
   start_date: 2021-10-01
 - name: edcast-to-snowflake
   extractor: tap-edcast
-  loader: target-snowflake-edcast
+  loader: target-snowflake--edcast
   transform: skip
   interval: '0 7 * * *'
   start_date: 2019-01-01

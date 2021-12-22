@@ -116,6 +116,16 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: TAP_EDCAST_URL_BASE
+        - name: TARGET_EDCAST_SNOWFLAKE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TARGET_EDCAST_SNOWFLAKE_USERNAME
+        - name: TARGET_EDCAST_SNOWFLAKE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TARGET_EDCAST_SNOWFLAKE_PASSWORD
 
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER

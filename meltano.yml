@@ -83,6 +83,7 @@ plugins:
       warehouse: LOADING
       role: MELTANO
   - name: target-snowflake-edcast
+    variant: meltano
     pip_url: git+https://gitlab.com/gitlab-data/target-snowflake-edcast
     config:
       account: gitlab

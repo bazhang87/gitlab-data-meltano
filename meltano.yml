@@ -121,5 +121,5 @@ schedules:
   loader: target-snowflake--edcast
   transform: skip
   interval: '0 7 * * *'
-  start_date: 2019-01-01
+  start_date: 2021-12-01
 

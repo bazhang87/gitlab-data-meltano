@@ -91,6 +91,8 @@ plugins:
       database: RAW
       warehouse: LOADING
       role: MELTANO
+      username: $TARGET_EDCAST_SNOWFLAKE_USERNAME
+      password: $TARGET_EDCAST_SNOWFLAKE_PASSWORD
   orchestrators:
   - name: airflow
     pip_url: psycopg2 apache-airflow==1.10.13 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.13/constraints-3.8.txt

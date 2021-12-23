@@ -102,19 +102,19 @@ plugins:
 schedules:
 - name: xactly-to-snowflake
   extractor: tap-xactly
-  loader: target-snowflake
+  loader: target-snowflake--edcast
   transform: skip
   interval: '@daily'
   start_date: 2021-07-13
 - name: zengrc-to-snowflake
   extractor: tap-zengrc
-  loader: target-snowflake
+  loader: target-snowflake--edcast
   transform: skip
   interval: '@daily'
   start_date: 2021-07-13
 - name: adaptive-to-snowflake
   extractor: tap-adaptive
-  loader: target-snowflake
+  loader: target-snowflake--edcast
   transform: skip
   interval: '@daily'
   start_date: 2021-10-01

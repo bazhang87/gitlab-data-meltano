@@ -21,6 +21,8 @@
 
 # Preparing Meltano <a name="preparing-meltano"></a>
 
+For more information how we use `Meltano` in GitLab, refer to [Meltano-Gitlab](https://about.gitlab.com/handbook/business-technology/data-team/platform/Meltano-Gitlab/) page.
+
 Below is a guide on how to set up the Meltano project. Currently these are the taps/targets installed:
 
 * [Tap Xactly](https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-xactly)

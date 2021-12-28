@@ -1,10 +1,12 @@
 # Table of Contents
 
-* [Preparing Meltano](#preparing-meltano)
+* [Preparing Meltano](#preparing-meltano) - OK 
+  * [Xactly Setup](#xactly-setup)- OK
+  * [EdCast Setup](#edcast-setup)- OK
   * [Gmail Setup](#gmail-setup)
   * [Slack Setup](#slack-setup)
   * [Zoom Setup](#zoom-setup)
-  * [Meltano Setup](#meltano-setup)
+  * [Meltano Setup](#meltano-setup)- OK
   * [Running the Scheduler](#running-the-scheduler)
 * [Preparing Meltano for Production](#preparing-meltano-for-production)
   * [Dockerize the Project](#dockerize-the-project)
@@ -20,7 +22,7 @@
       * [Create Additional Secrets](#create-additional-secrets)
   * [Deploy Meltano to Kubernetes](#deploy-meltano-to-kubernetes)
 
-# Preparing Meltano
+# Preparing Meltano <a name="preparing-meltano"></a>
 
 Below is a guide on how to set up the Meltano project. Currently these are the taps/targets installed:
 
@@ -30,7 +32,7 @@ Below is a guide on how to set up the Meltano project. Currently these are the t
 
 Setup of these taps/targets must be completed before the Meltano project is launched.
 
-## Xactly Setup
+## Xactly Setup  <a name="xactly-setup"></a>
 The only main concern with Xactly is the presence of the JDBC driver. In order to accomodate this, environment variables must be set correctly so that Meltano and the tap can access the Database correctly.
 
 For Xactly specifically, the following variables MUST be set:
@@ -40,7 +42,7 @@ For Xactly specifically, the following variables MUST be set:
 * `client_id`
 * `consumer`
 
-## EdCast Setup
+## EdCast Setup <a name="edcast-setup"></a>
 The setup for `EdCast` is fairly simple. It consuming data from `RESTful API`. In order to accomodate this, environment variables must be set correctly so that Meltano and the tap can access the Database correctly.
 
 For `EdCast` specifically, the following variables MUST be set:
@@ -51,7 +53,7 @@ For `EdCast` specifically, the following variables MUST be set:
 * `url_base` - base `URL` address to access the API, usually it is `https://api.domo.com`
 
 
-## Meltano Setup
+## Meltano Setup <a name="meltano-setup"></a>
 
 The following sections must be changed in the `meltano.yml` file before installation:
 
@@ -103,7 +105,7 @@ meltano invoke airflow scheduler
 docker run -v $(pwd):/projects -w /projects meltano/meltano:latest-python3.8 invoke airflow scheduler
 ```
 
-# Preparing a Production Environment for Meltano
+# Preparing a Production Environment for Meltano <a name="preparing-meltano-for-production"></a>
 
 Below are the steps to get your Meltano project ready for a production environment. The production deployment instructions are for Google Cloud Platform using the Google Cloud SDK, and covers the following services:
 

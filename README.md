@@ -20,7 +20,7 @@
     * [Connect from GKE to Cloud SQL](#connect-from-gke-to-cloud-sql)
     * [Create Kubernetes Secrets](#create-kubernetes-secrets)
       * [Create Additional Secrets](#create-additional-secrets)
-  * [Deploy Meltano to Kubernetes](#deploy-meltano-to-kubernetes)
+  * [Deploy Meltano to Kubernetes](#deploy-meltano-to-kubernetes) - OK
 
 # Preparing Meltano <a name="preparing-meltano"></a>
 
@@ -282,7 +282,7 @@ kubectl create secret generic my-secret-name --from-literal user=admin --namespa
   * `service_key`
     * The service account key created during the [Gmail Setup](#gmail-setup)
 
-## Deploy Meltano to Kubernetes
+## Deploy Meltano to Kubernetes <a name="deploy-meltano-to-kubernetes"></a>
 
 To deploy to Kubernetes upload the Docker image to Container Registry.
 

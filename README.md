@@ -1,4 +1,3 @@
-
 # Table of Contents
 
 * [Preparing Meltano](#preparing-meltano)
@@ -40,6 +39,17 @@ For Xactly specifically, the following variables MUST be set:
 * `password`
 * `client_id`
 * `consumer`
+
+## EdCast Setup
+The setup for `EdCast` is fairly simple. It consuming data from `RESTful API`. In order to accomodate this, environment variables must be set correctly so that Meltano and the tap can access the Database correctly.
+
+For `EdCast` specifically, the following variables MUST be set:
+* `start_date` - start date when want to load the data. Exposed in the [ISO date time format](https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC) `2000-01-01T00:00:00Z`
+* `end_date` - end date when want to load the data. Exposed in the [ISO date time format](https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC) `2030-01-01T00:00:00Z`
+* `username` - username for the acccess, got from the provider
+* `password` - password for the acccess, got from the provider
+* `url_base` - base `URL` address to access the API, usually it is `https://api.domo.com`
+
 
 ## Meltano Setup
 

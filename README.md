@@ -1,10 +1,8 @@
-
 # Table of Contents
 
 * [Preparing Meltano](#preparing-meltano)
-  * [Gmail Setup](#gmail-setup)
-  * [Slack Setup](#slack-setup)
-  * [Zoom Setup](#zoom-setup)
+  * [Xactly Setup](#xactly-setup)
+  * [EdCast Setup](#edcast-setup)
   * [Meltano Setup](#meltano-setup)
   * [Running the Scheduler](#running-the-scheduler)
 * [Preparing Meltano for Production](#preparing-meltano-for-production)
@@ -21,7 +19,9 @@
       * [Create Additional Secrets](#create-additional-secrets)
   * [Deploy Meltano to Kubernetes](#deploy-meltano-to-kubernetes)
 
-# Preparing Meltano
+# Preparing Meltano <a name="preparing-meltano"></a>
+
+For more information how we use `Meltano` in GitLab, refer to [Meltano-Gitlab](https://about.gitlab.com/handbook/business-technology/data-team/platform/Meltano-Gitlab/) page.
 
 Below is a guide on how to set up the Meltano project. Currently these are the taps/targets installed:
 
@@ -31,7 +31,7 @@ Below is a guide on how to set up the Meltano project. Currently these are the t
 
 Setup of these taps/targets must be completed before the Meltano project is launched.
 
-## Xactly Setup
+## Xactly Setup  <a name="xactly-setup"></a>
 The only main concern with Xactly is the presence of the JDBC driver. In order to accomodate this, environment variables must be set correctly so that Meltano and the tap can access the Database correctly.
 
 For Xactly specifically, the following variables MUST be set:
@@ -41,7 +41,18 @@ For Xactly specifically, the following variables MUST be set:
 * `client_id`
 * `consumer`
 
-## Meltano Setup
+## EdCast Setup <a name="edcast-setup"></a>
+The setup for `EdCast` is fairly simple. It consuming data from `RESTful API`. In order to accomodate this, environment variables must be set correctly so that Meltano and the tap can access the Database correctly.
+
+For `EdCast` specifically, the following variables MUST be set:
+* `start_date` - start date when want to load the data. Exposed in the [ISO date time format](https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC) `2000-01-01T00:00:00Z`
+* `end_date` - end date when want to load the data. Exposed in the [ISO date time format](https://en.wikipedia.org/wiki/ISO_8601#Time_offsets_from_UTC) `2030-01-01T00:00:00Z`
+* `username` - username for the acccess, got from the provider
+* `password` - password for the acccess, got from the provider
+* `url_base` - base `URL` address to access the API, usually it is `https://api.domo.com`
+
+
+## Meltano Setup <a name="meltano-setup"></a>
 
 The following sections must be changed in the `meltano.yml` file before installation:
 
@@ -49,7 +60,7 @@ The following sections must be changed in the `meltano.yml` file before installa
 
 Once the above settings are changed, run the following command to install your environment:
 
-```sh
+```bash
 # Without Docker
 meltano install
 
@@ -59,7 +70,7 @@ docker run -v $(pwd):/projects -w /projects meltano/meltano:latest-python3.8 ins
 
 In order for the installed Meltano taps to function properly, the following [environment varaiables](https://en.wikipedia.org/wiki/Environment_variable) must be set:
 
-```text
+```bash
 SF_USER="<USER>"
 SF_PASSWORD="<PASSWORD>"
 
@@ -79,13 +90,13 @@ For local development, the easiest way to set these environment variables is to 
 
 Once installed and the environment variables have been set up, you may run any command from the [Meltano CLI](https://meltano.com/docs/command-line-interface.html)
 
-## Running the Scheduler
+## Running the Scheduler <a name="running-the-scheduler"></a>
 
 Scheduling is handled with Meltano's built-in [Airflow](https://airflow.apache.org/). Currently, each tap is scheduled to sync every day. If you wish to change the frequency of individual syncs, you can change the value of `interval` under the `schedules` section within `meltano.yml`. Refer to the [Meltano documentation](https://meltano.com/docs/command-line-interface.html#how-to-use-7) for presets and valid intervals.
 
 To run the scheduler, run the following command
 
-```sh
+```bash
 # Without Docker
 meltano invoke airflow scheduler
 
@@ -93,7 +104,7 @@ meltano invoke airflow scheduler
 docker run -v $(pwd):/projects -w /projects meltano/meltano:latest-python3.8 invoke airflow scheduler
 ```
 
-# Preparing a Production Environment for Meltano
+# Preparing a Production Environment for Meltano <a name="preparing-meltano-for-production"></a>
 
 Below are the steps to get your Meltano project ready for a production environment. The production deployment instructions are for Google Cloud Platform using the Google Cloud SDK, and covers the following services:
 
@@ -103,19 +114,19 @@ Below are the steps to get your Meltano project ready for a production environme
 
 The deployment implements Kubernetes Secrets for sensative environment variables, as well as a .json key file that is used to authorize the Cloud SQL proxy in a Kubernetes sidecar setup.
 
-## Dockerize the Project
+## Dockerize the Project <a name="dockerize-the-project"></a>
 
 Once the taps have been set up and the `meltano.yml` file has been changed, you can create a docker image to get ready for deployment to production. The provided `Dockerfile` will build the image and start up the Meltano Scheduler.
 
 To build the image, run the following command in the root directory:
 
-```sh
+```bash
 docker build --tag <IMAGE NAME>:<TAG NAME> .
 ```
 
 Documentation for building containers with Docker can be found [here](https://docs.docker.com/engine/reference/commandline/build/).
 
-## Google Cloud Platform Setup
+## Google Cloud Platform Setup <a name="google-cloud-platform-setup"></a>
 
 This section covers the necessary steps to create a GCP Production environment for the Meltano application. A GCP Project is a required, and it is reccomended that the [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart) is installed in order to follow commands used in this guide. The following GCP APIs must be enabled:
 
@@ -127,7 +138,7 @@ This section covers the necessary steps to create a GCP Production environment f
 * Additional API dependencies will be created as necessary by the services listed above
   * This is typical behavior for GCP APIs
 
-### Cloud SQL and Cloud SQL Admin
+### Cloud SQL and Cloud SQL Admin <a name="cloud-sql-and-cloud-sql-admin"></a>
 
 The Cloud SQL and Cloud SQL Admin APIs are used to store Airflow metadata in the Meltano production environment. The Cloud SQL Admin API is necessary in order to create a Cloud SQL Proxy within a Kubernetes [deployment](https://cloud.google.com/kubernetes-engine/docs/concepts/deployment).
 
@@ -153,7 +164,7 @@ There are some things to keep track of from this setup that will be needed to cu
   * A user name for the database
     * The password of the user
 
-### Container Registry
+### Container Registry <a name="container-registry"></a>
 
 The Container Registry is used to store the Docker image that will be deployed in Kubernetes Engine. Artifact Registry can be used as an alternative, but the `gcloud sdk` commands in this guide will be for Container Registry.
 
@@ -167,7 +178,7 @@ Container Registry will need to be authenticated in your local environment using
 
 Google Container Registry docs can be found [here](https://cloud.google.com/container-registry/docs/quickstart).
 
-### Kubernetes Engine
+### Kubernetes Engine <a name="kubernetes-engine"></a>
 
 Kubernetes Engine is used to deploy the production Meltano application. If there is an existing Kubernetes cluster that you would like to use for deploying Meltano skip the [Create a GKE Cluster](#create-a-gke-cluster) section.
 
@@ -177,31 +188,31 @@ Enable the Kubernetes Engine API
 
 Kubernetes docs can be found [here](https://kubernetes.io/docs/home/).
 
-#### Install `kubectl` for Google Cloud SDK
+#### Install `kubectl` for Google Cloud SDK <a name="install-kubectl-for-google-cloud-sdk"></a>
 
 https://cloud.google.com/kubernetes-engine/docs/quickstart#choosing_a_shell
 
 Select `Local shell`, and then run the following command:
 
-```sh
+```bash
 gcloud components install kubectl
 ```
 
-#### Create a GKE Cluster
+#### Create a GKE Cluster <a name="create-a-gke-cluster"></a>
 
 https://cloud.google.com/kubernetes-engine/docs/quickstart#create_cluster
 
-```sh
+```bash
 gcloud container clusters create cluster-name --num-nodes=1
 ```
 
 Authenticate the Cluster
 
-```sh
+```bash
 gcloud container clusters get-credentials cluster-name
 ```
 
-### Connect from GKE to Cloud SQL
+### Connect from GKE to Cloud SQL <a name="connect-from-gke-to-cloud-sql"></a>
 
 The following guide section explains the process to create a service account key file and attach it to a Kubernetes secret, which will then be used by Cloud SQL Proxy for authentication:
 
@@ -209,7 +220,7 @@ https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine#service-acc
 
 * When creating Kubernetes secrets use the `--namespace=gitlab` flag
 
-```text
+```bash
 # Example
 
 kubectl create secret generic <YOUR-DB-SECRET> --namespace=gitlab \
@@ -239,19 +250,19 @@ The Kubernetes secret name used in `gitlab-app.yaml` for the Cloud SQL credentia
 
 The Cloud SQL Admin API should be enabled from [this section of the guide](#cloud-sql-and-cloud-sql-admin). If is not enabled, please proceed to [Connecting using the Cloud SQL Proxy](https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine#proxy) which explains why it is necessary to enable the Cloud SQL Admin API.
 
-### Create Kubernetes Secrets
+### Create Kubernetes Secrets <a name="create-kubernetes-secrets"></a>
 
 Create the other necessary Kubernetes [secrets](https://cloud.google.com/kubernetes-engine/docs/concepts/secret). If the secret names and keys that are created match what is in the `gitlab-app.yaml` file it minimizes the edits required to customize the deployment.
 
 All secrets must be created for the `gitlab` namespace
 
-```sh
+```bash
 # Example
 
 kubectl create secret generic my-secret-name --from-literal user=admin --namespace=gitlab
 ```
 
-#### Create Additional Secrets
+#### Create Additional Secrets <a name="create-additional-secrets"></a>
 
 * Secret Name
   * `tap-secrets`
@@ -270,19 +281,19 @@ kubectl create secret generic my-secret-name --from-literal user=admin --namespa
   * `service_key`
     * The service account key created during the [Gmail Setup](#gmail-setup)
 
-## Deploy Meltano to Kubernetes
+## Deploy Meltano to Kubernetes <a name="deploy-meltano-to-kubernetes"></a>
 
 To deploy to Kubernetes upload the Docker image to Container Registry.
 
-Step 1 - Tag the image:
+**Step 1** - Tag the image:
 
-```sh
+```bash
 docker tag img_name gcr.io/[PROJECT-ID]/img_name:tag
 ```
 
-Step 2 - Push the image to Google Container Registry:
+**Step 2** - Push the image to Google Container Registry:
 
-```sh
+```bash
 docker push gcr.io/[PROJECT-ID]/img_name:tag1
 ```
 

@@ -127,6 +127,38 @@ spec:
               name: tap-secrets
               key: TARGET_EDCAST_SNOWFLAKE_PASSWORD
 
+        # Kubernetes Secrets :: ZenDesk
+        - name: TAP_ZENDESK_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_API_TOKEN
+        - name: TAP_ZENDESK_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_EMAIL
+        - name: TAP_ZENDESK_START_DATE
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_START_DATE
+        - name: TAP_ZENDESK_SUBDOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_SUBDOMAIN
+        - name: TAP_ZENDESK_SNOWFLAKE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_SNOWFLAKE_USERNAME
+        - name: TAP_ZENDESK_SNOWFLAKE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_SNOWFLAKE_PASSWORD
+  
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER
           valueFrom:

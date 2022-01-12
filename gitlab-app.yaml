@@ -148,16 +148,6 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: TAP_ZENDESK_SUBDOMAIN
-        - name: TAP_ZENDESK_SNOWFLAKE_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: tap-secrets
-              key: TAP_ZENDESK_SNOWFLAKE_USERNAME
-        - name: TAP_ZENDESK_SNOWFLAKE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: tap-secrets
-              key: TAP_ZENDESK_SNOWFLAKE_PASSWORD
   
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER

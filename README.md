@@ -254,7 +254,7 @@ The Cloud SQL Admin API should be enabled from [this section of the guide](#clou
 
 Create the other necessary Kubernetes [secrets](https://cloud.google.com/kubernetes-engine/docs/concepts/secret). If the secret names and keys that are created match what is in the `gitlab-app.yaml` file it minimizes the edits required to customize the deployment.
 
-All secrets must be created for the `gitlab` namespace
+All secrets must be created for the `meltano` namespace
 
 ```bash
 # Example

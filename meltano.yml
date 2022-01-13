@@ -73,6 +73,56 @@ plugins:
       start_date: $TAP_EDCAST_START_DATE
       end_date: $TAP_EDCAST_END_DATE
       url_base: $TAP_EDCAST_URL_BASE
+  - name: tap-zendesk
+    variant: twilio-labs
+    pip_url: twilio-tap-zendesk
+    settings:
+    - name: email
+    - name: start_date
+    - name: subdomain
+    - name: tap_zendesk_api_token
+    config:
+      email: $TAP_ZENDESK_EMAIL
+      start_date: $TAP_ZENDESK_START_DATE
+      subdomain: $TAP_ZENDESK_SUBDOMAIN
+      tap_zendesk_api_token: $TAP_ZENDESK_API_TOKEN
+    select:
+    - groups.* #all groups columns
+    - '!groups.description' # except column description
+    - '!groups.default' # and column default
+    - macros.*
+    - '!macros.restriction.*' # all macros table columns, except the ones fitting this pattern
+    - organizations.*
+    - '!organizations.organization_fields.*' 
+    - satisfaction_ratings.* ≈
+    - sla_policies.*
+    - '!sla_policies.filter.*'
+    - tags.*
+    - ticket_audits.author_id
+    - ticket_audits.created_at
+    - ticket_audits.events
+    - ticket_audits.id
+    - ticket_audits.metadata
+    - ticket_audits.ticket_id
+    - ticket_audits.via
+    - ticket_comments.*
+    - '!ticket_comments.metadata.*'
+    - '!ticket_comments.via.*'
+    - ticket_fields.*
+    - ticket_forms.*
+    - ticket_metrics.*
+    - '!ticket_metrics.*.business'
+    - '!ticket_metrics.*.calendar'
+    - tickets.*
+    - '!tickets.satisfaction_rating.*'
+    - '!tickets.via.*'
+    - users.*
+    - '!users.iana_time_zone'
+    - '!users.photo.*'
+    - '!users.user_fields.*'
+    metadata:
+      '*':
+        replication-method: FULL_TABLE
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -124,4 +174,10 @@ schedules:
   transform: skip
   interval: '0 7 * * *'
   start_date: 2021-12-01
+- name: zendesk-to-snowflake
+  extractor: tap-zendesk
+  loader: target-snowflake--edcast
+  transform: skip
+  interval: '0 4 * * *'
+  start_date: 2012-12-30 00:00:00
 

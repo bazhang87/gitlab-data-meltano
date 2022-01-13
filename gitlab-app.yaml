@@ -19,7 +19,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: meltano-tap
-        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.1
+        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.2
         imagePullPolicy: Always
         env:
         # Kubernetes Secrets :: Databases
@@ -127,6 +127,28 @@ spec:
               name: tap-secrets
               key: TARGET_EDCAST_SNOWFLAKE_PASSWORD
 
+        # Kubernetes Secrets :: ZenDesk
+        - name: TAP_ZENDESK_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_API_TOKEN
+        - name: TAP_ZENDESK_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_EMAIL
+        - name: TAP_ZENDESK_START_DATE
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_START_DATE
+        - name: TAP_ZENDESK_SUBDOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_SUBDOMAIN
+  
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER
           valueFrom:

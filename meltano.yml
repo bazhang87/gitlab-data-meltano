@@ -75,7 +75,10 @@ plugins:
       url_base: $TAP_EDCAST_URL_BASE
   - name: tap-zendesk
     variant: twilio-labs
-    pip_url: twilio-tap-zendesk
+    pip_url: git+https://github.com/twilio-labs/twilio-tap-zendesk
+    executable: tap-zendesk
+    capabilities:
+    - discover
     settings:
     - name: email
     - name: start_date

@@ -83,12 +83,12 @@ plugins:
     - name: email
     - name: start_date
     - name: subdomain
-    - name: tap_zendesk_api_token
+    - name: api_token
     config:
       email: $TAP_ZENDESK_EMAIL
       start_date: $TAP_ZENDESK_START_DATE
       subdomain: $TAP_ZENDESK_SUBDOMAIN
-      tap_zendesk_api_token: $TAP_ZENDESK_API_TOKEN
+      api_token: $TAP_ZENDESK_API_TOKEN
     select:
     - groups.* #all groups columns
     - '!groups.description' # except column description

@@ -39,7 +39,7 @@ resource "google_container_cluster" "meltano_cluster" {
         }
     }
     vertical_pod_autoscaling {
-        enabled=false
+        enabled=true
     }
     private_cluster_config {
         enable_private_endpoint = false

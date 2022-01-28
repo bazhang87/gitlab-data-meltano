@@ -84,6 +84,14 @@ plugins:
     - name: start_date
     - name: subdomain
     - name: api_token
+    metadata:
+    '*':
+      replication-method: INCREMENTAL
+    '*':
+      replication-key: created_at
+      created_at:
+        is-replication-key: true
+      primary-keys: ["ID"]
     config:
       email: $TAP_ZENDESK_EMAIL
       start_date: $TAP_ZENDESK_START_DATE

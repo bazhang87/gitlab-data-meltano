@@ -21,6 +21,13 @@ spec:
       - name: meltano-tap
         image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.2
         imagePullPolicy: Always
+        resources:
+            limits:
+              memory: "12000Mi"
+              cpu: "3000m"
+            requests:
+              memory: "12000Mi"
+              cpu: "3000m"
         env:
         # Kubernetes Secrets :: Databases
         - name: DB_USER

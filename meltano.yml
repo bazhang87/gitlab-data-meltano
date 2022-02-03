@@ -314,7 +314,6 @@ plugins:
     - users.url
     - users.user_fields
     - users.verfied
-
     metadata:
       '*':
         replication-method: FULL_TABLE

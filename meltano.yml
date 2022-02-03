@@ -104,8 +104,21 @@ plugins:
     - group_memberships.* 
     - macros.*
     - '!macros.restriction.*' # all macros table columns, except the ones fitting this pattern
-    - organizations.*
-    - '!organizations.organization_fields.*' 
+    - organizations.created_at
+    - organizations.deleted_at
+    - organizations.details
+    - organizations.domain_names
+    - organizations.external_id
+    - organizations.group_id
+    - organizations.id
+    - organizations.name
+    - organizations.notes
+    - organizations.organization_fields
+    - organizations.shared_comments
+    - organizations.shared_tickets
+    - organizations.tags
+    - organizations.updated_at
+    - organizations.url
     - satisfaction_ratings.* ≈
     - sla_policies.*
     - '!sla_policies.filter.*'

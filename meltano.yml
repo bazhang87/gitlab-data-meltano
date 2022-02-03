@@ -98,12 +98,23 @@ plugins:
       subdomain: $TAP_ZENDESK_SUBDOMAIN
       api_token: $TAP_ZENDESK_API_TOKEN
     select:
-    - groups.* #all groups columns
-    - '!groups.description' # except column description
-    - '!groups.default' # and column default
+    - groups.created_at
+    - groups.deleted
+    - groups.id
+    - groups.name
+    - groups.updated_at
+    - groups.url
     - group_memberships.* 
-    - macros.*
-    - '!macros.restriction.*' # all macros table columns, except the ones fitting this pattern
+    - macros.actions
+    - macros.active
+    - macros.created_at
+    - macros.description
+    - macros.id
+    - macros.position
+    - macros.restriction
+    - macros.title
+    - macros.updated_at
+    - macros.url
     - organizations.created_at
     - organizations.deleted_at
     - organizations.details
@@ -119,10 +130,29 @@ plugins:
     - organizations.tags
     - organizations.updated_at
     - organizations.url
-    - satisfaction_ratings.* ≈
-    - sla_policies.*
-    - '!sla_policies.filter.*'
-    - tags.*
+    - satisfaction_ratings.assignee_id
+    - satisfaction_ratings.comment
+    - satisfaction_ratings.created_at
+    - satisfaction_ratings.group_id
+    - satisfaction_ratings.id
+    - satisfaction_ratings.reason
+    - satisfaction_ratings.reason_id
+    - satisfaction_ratings.requester_id
+    - satisfaction_ratings.score
+    - satisfaction_ratings.ticket_id
+    - satisfaction_ratings.updated_at
+    - satisfaction_ratings.url
+    - sla_policies.created_at
+    - sla_policies.description
+    - sla_policies.filter
+    - sla_policies.id
+    - sla_policies.policy_metrics
+    - sla_policies.position
+    - sla_policies.title
+    - sla_policies.updated_at
+    - sla_policies.url
+    - tags.count
+    - tags.name
     - ticket_audits.author_id
     - ticket_audits.created_at
     - ticket_audits.events
@@ -130,21 +160,161 @@ plugins:
     - ticket_audits.metadata
     - ticket_audits.ticket_id
     - ticket_audits.via
-    - ticket_comments.*
-    - '!ticket_comments.metadata.*'
-    - '!ticket_comments.via.*'
-    - ticket_fields.*
-    - ticket_forms.*
-    - ticket_metrics.*
-    - '!ticket_metrics.*.business'
-    - '!ticket_metrics.*.calendar'
-    - tickets.*
-    - '!tickets.satisfaction_rating.*'
-    - '!tickets.via.*'
-    - users.*
-    - '!users.iana_time_zone'
-    - '!users.photo.*'
-    - '!users.user_fields.*'
+    - ticket_comments.attachments
+    - ticket_comments.audit_id
+    - ticket_comments.author_id
+    - ticket_comments.body
+    - ticket_comments.created_at
+    - ticket_comments.html_body
+    - ticket_comments.id
+    - ticket_comments.metadata
+    - ticket_comments.plain_body
+    - ticket_comments.public
+    - ticket_comments.ticket_id
+    - ticket_comments.type
+    - ticket_comments.via
+    - ticket_fields.active
+    - ticket_fields.agent_description
+    - ticket_fields.collapsed_for_agents
+    - ticket_fields.created_at
+    - ticket_fields.custom_field_options
+    - ticket_fields.description
+    - ticket_fields.editable_in_portal
+    - ticket_fields.id
+    - ticket_fields.position
+    - ticket_fields.raw_description
+    - ticket_fields.raw_title
+    - ticket_fields.raw_title_in_portal
+    - ticket_fields.regexp_for_validation
+    - ticket_fields.removable
+    - ticket_fields.required
+    - ticket_fields.required_in_portal
+    - ticket_fields.sub_type_id
+    - ticket_fields.system_field_options
+    - ticket_fields.tag
+    - ticket_fields.title
+    - ticket_fields.title_in_portal
+    - ticket_fields.type
+    - ticket_fields.updated_at
+    - ticket_fields.url
+    - ticket_fields.visible_in_portal
+    - ticket_forms.active
+    - ticket_forms.created_at
+    - ticket_forms.default
+    - ticket_forms.display_name
+    - ticket_forms.end_user_visible
+    - ticket_forms.id
+    - ticket_forms.in_all_brands
+    - ticket_forms.name
+    - ticket_forms.position
+    - ticket_forms.raw_display_name
+    - ticket_forms.raw_name
+    - ticket_forms.restricted_brand_ids
+    - ticket_forms.ticket_field_ids
+    - ticket_forms.updated_at
+    - ticket_forms.url
+    - ticket_metrics.agent_wait_time_in_minutes
+    - ticket_metrics.assigned_at
+    - ticket_metrics.assignee_stations
+    - ticket_metrics.assignee_updated_at
+    - ticket_metrics.created_at
+    - ticket_metrics.first_resolution_time_in_minutes
+    - ticket_metrics.full_resolution_time_in_minutes
+    - ticket_metrics.group_stations
+    - ticket_metrics.id
+    - ticket_metrics.initially_assigned_at
+    - ticket_metrics.instance_id
+    - ticket_metrics.latest_comment_added_at
+    - ticket_metrics.metric
+    - ticket_metrics.on_hold_time_in_minutes
+    - ticket_metrics.reopens
+    - ticket_metrics.replies
+    - ticket_metrics.reply_time_in_minutes
+    - ticket_metrics.requester_updated_at
+    - ticket_metrics.requester_wait_time_in_minutes
+    - ticket_metrics.solved_at
+    - ticket_metrics.status
+    - ticket_metrics.status_updated_at
+    - ticket_metrics.ticket_id
+    - ticket_metrics.time
+    - ticket_metrics.type
+    - ticket_metrics.updated_at
+    - ticket_metrics.url
+    - tickets.allow_attachments
+    - tickets.allow_channelback
+    - tickets.assignee_id
+    - tickets.brand_id
+    - tickets.collaborator_ids
+    - tickets.created_at
+    - tickets.custom_fields
+    - tickets.description
+    - tickets.due_at
+    - tickets.email_cc_ids
+    - tickets.external_id
+    - tickets.follower_ids
+    - tickets.followup_ids
+    - tickets.forum_topic_id
+    - tickets.generated_timestamp
+    - tickets.group_id
+    - tickets.has_incidents
+    - tickets.id
+    - tickets.is_public
+    - tickets.organization_id
+    - tickets.priority
+    - tickets.problem_id
+    - tickets.raw_subject
+    - tickets.recipient
+    - tickets.requester_id
+    - tickets.satisfaction_rating
+    - tickets.sharing_agreement_ids
+    - tickets.status
+    - tickets.subject
+    - tickets.submitter_id
+    - tickets.tags
+    - tickets.ticket_form_id
+    - tickets.type
+    - tickets.updated_at
+    - tickets.url
+    - tickets.via
+    - users.active
+    - users.alias
+    - users.chat_only
+    - users.created_at
+    - users.custom_role_id
+    - users.default_group_id
+    - users.details
+    - users.email
+    - users.external_id
+    - users.id
+    - users.last_login_at
+    - users.locale
+    - users.locale_id
+    - users.moderator
+    - users.name
+    - users.notes
+    - users.only_private_comments
+    - users.organization_id
+    - users.permanently_deleted
+    - users.phone
+    - users.photo
+    - users.report_csv
+    - users.restricted_agent
+    - users.role
+    - users.role_type
+    - users.shared
+    - users.shared_agent
+    - users.shared_phone_number
+    - users.signature
+    - users.suspended
+    - users.tags
+    - users.ticket_restriction
+    - users.time_zone
+    - users.two_factor_auth_enabled
+    - users.updated_at
+    - users.url
+    - users.user_fields
+    - users.verfied
+
     metadata:
       '*':
         replication-method: FULL_TABLE

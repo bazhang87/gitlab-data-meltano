@@ -109,39 +109,10 @@ plugins:
     - macros.active
     - macros.created_at
     - macros.description
-    - macros.id
-    - macros.position
-    - macros.restriction
-    - macros.title
-    - macros.updated_at
-    - macros.url
-    - organizations.created_at
-    - organizations.deleted_at
-    - organizations.details
-    - organizations.domain_names
-    - organizations.external_id
-    - organizations.group_id
-    - organizations.id
-    - organizations.name
-    - organizations.notes
-    - organizations.organization_fields
-    - organizations.shared_comments
-    - organizations.shared_tickets
-    - organizations.tags
-    - organizations.updated_at
+    - macros.*
+    - organizations.*
     - organizations.url
-    - satisfaction_ratings.assignee_id
-    - satisfaction_ratings.comment
-    - satisfaction_ratings.created_at
-    - satisfaction_ratings.group_id
-    - satisfaction_ratings.id
-    - satisfaction_ratings.reason
-    - satisfaction_ratings.reason_id
-    - satisfaction_ratings.requester_id
-    - satisfaction_ratings.score
-    - satisfaction_ratings.ticket_id
-    - satisfaction_ratings.updated_at
-    - satisfaction_ratings.url
+    - satisfaction_ratings.*
     - sla_policies.created_at
     - sla_policies.description
     - sla_policies.filter
@@ -153,13 +124,7 @@ plugins:
     - sla_policies.url
     - tags.count
     - tags.name
-    - ticket_audits.author_id
-    - ticket_audits.created_at
-    - ticket_audits.events
-    - ticket_audits.id
-    - ticket_audits.metadata
-    - ticket_audits.ticket_id
-    - ticket_audits.via
+    - ticket_audits.*
     - ticket_comments.attachments
     - ticket_comments.audit_id
     - ticket_comments.author_id
@@ -315,8 +280,13 @@ plugins:
     - users.user_fields
     - users.verfied
     metadata:
-      '*':
-        replication-method: FULL_TABLE
+    '*':
+      replication-method: INCREMENTAL
+    '*':
+      replication-key: created_at
+      created_at:
+        is-replication-key: true
+      primary-keys: ["ID"]
   loaders:
   - name: target-snowflake
     variant: meltano

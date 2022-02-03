@@ -101,6 +101,7 @@ plugins:
     - groups.* #all groups columns
     - '!groups.description' # except column description
     - '!groups.default' # and column default
+    - group_memberships.* 
     - macros.*
     - '!macros.restriction.*' # all macros table columns, except the ones fitting this pattern
     - organizations.*

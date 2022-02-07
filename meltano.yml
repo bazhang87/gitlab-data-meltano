@@ -111,7 +111,6 @@ plugins:
     - macros.description
     - macros.*
     - organizations.*
-    - organizations.url
     - satisfaction_ratings.*
     - sla_policies.created_at
     - sla_policies.description

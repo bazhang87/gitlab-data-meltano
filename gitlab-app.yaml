@@ -155,6 +155,28 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: TAP_ZENDESK_SUBDOMAIN
+
+        # Kubernetes Secrets :: ZenDesk Community Relations
+        - name: TAP_ZENDESK_COMMUNITY_RELATIONS_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_COMMUNITY_RELATIONS_API_TOKEN
+        - name: TAP_ZENDESK_COMMUNITY_RELATIONS_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_COMMUNITY_RELATIONS_EMAIL
+        - name: TAP_ZENDESK_COMMUNITY_RELATIONS_START_DATE
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_COMMUNITY_RELATIONS_START_DATE
+        - name: TAP_ZENDESK_COMMUNITY_RELATIONS_SUBDOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: tap-secrets
+              key: TAP_ZENDESK_COMMUNITY_RELATIONS_SUBDOMAIN
   
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER

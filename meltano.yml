@@ -88,8 +88,8 @@ plugins:
     '*':
       replication-method: INCREMENTAL
     '*':
-      replication-key: created_at
-      created_at:
+      replication-key: __loaded_at
+      __loaded_at:
         is-replication-key: true
       primary-keys: ["ID"]
     config:

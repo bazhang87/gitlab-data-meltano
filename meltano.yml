@@ -286,6 +286,40 @@ plugins:
       created_at:
         is-replication-key: true
       primary-keys: ["ID"]
+  - name: tap-zendesk--community-relations
+    inherit_from: tap-zendesk
+    config:
+      email: $TAP_ZENDESK_COMMUNITY_RELATIONS_EMAIL
+      start_date: $TAP_ZENDESK_COMMUNITY_RELATIONS_START_DATE
+      subdomain: $TAP_ZENDESK_COMMUNITY_RELATIONS_SUBDOMAIN
+      api_token: $TAP_ZENDESK_COMMUNITY_RELATIONS_API_TOKEN
+    settings:
+    - name: email
+    - name: start_date
+    - name: subdomain
+    - name: api_token
+    metadata:
+    '*':
+      replication-method: INCREMENTAL
+    '*':
+      replication-key: __loaded_at 
+      __loaded_at:
+        is-replication-key: true
+      primary-keys: ["ID"]
+    select:
+    - group_memberships.*
+    - groups.*
+    - macros.*
+    - organizations.*
+    - satistfaction_ratings.*
+    - sla_policies.*
+    - tags.*
+    - ticket_audits.*
+    - ticket_comments.*
+    - ticket_fields.*
+    - ticket_metrics.*
+    - tickets.*
+    - users.*
   loaders:
   - name: target-snowflake
     variant: meltano
@@ -343,4 +377,10 @@ schedules:
   transform: skip
   interval: '0 4 * * *'
   start_date: 2012-12-30 00:00:00
+- name: zendesk-community-relations-to-snowflake
+  extractor: tap-zendesk--community-relations
+  loader: target-snowflake--edcast
+  transform: skip
+  interval: '0 5 * * *'
+  start_date: 2017-01-01 00:00:00
 

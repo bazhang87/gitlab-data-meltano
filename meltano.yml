@@ -320,6 +320,12 @@ plugins:
     - ticket_metrics.*
     - tickets.*
     - users.*
+  - name: tap-mailgun
+    variant: streetteam
+    pip_url: git+https://github.com/streetteam/tap-mailgun.git
+    config:
+      private_key: $TAP_MAILGUN_PRIVATE_KEY
+      start_date: $TAP_MAILGUN_START_DATE
   loaders:
   - name: target-snowflake
     variant: meltano

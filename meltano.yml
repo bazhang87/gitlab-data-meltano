@@ -372,7 +372,7 @@ schedules:
   interval: '@daily'
   start_date: 2021-10-01
 - name: mailgun-to-snowflake
-  interval: 0 6 * * *
+  interval: '0 6 * * *'
   extractor: tap-mailgun
   loader: target-snowflake--edcast
   transform: skip

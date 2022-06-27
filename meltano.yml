@@ -371,6 +371,12 @@ schedules:
   transform: skip
   interval: '@daily'
   start_date: 2021-10-01
+- name: mailgun-to-snowflake
+  interval: 0 6 * * *
+  extractor: tap-mailgun
+  loader: target-snowflake--edcast
+  transform: skip
+  start_date: 2022-01-01
 - name: edcast-to-snowflake
   extractor: tap-edcast
   loader: target-snowflake--edcast

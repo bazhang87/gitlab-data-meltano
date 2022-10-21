@@ -48,31 +48,6 @@ plugins:
       start_date: '2010-01-01T00:00:00Z'
       username: $TAP_ADAPTIVE_USERNAME
       password: $TAP_ADAPTIVE_PASSWORD
-  - name: tap-edcast
-    namespace: tap_edcast
-    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-edcast
-    executable: tap-edcast
-    capabilities:
-     - catalog
-     - discover
-     - state
-    settings:
-    - name: username
-      kind: string
-    - name: password
-      kind: password
-    - name: start_date
-      value: '1900-01-01T00:00:00Z'
-    - name: end_date
-      value: '2030-01-01T00:00:00Z'
-    - name: url_base
-      value: 'https://api.domo.com'
-    config:
-      username: $TAP_EDCAST_USERNAME
-      password: $TAP_EDCAST_PASSWORD
-      start_date: $TAP_EDCAST_START_DATE
-      end_date: $TAP_EDCAST_END_DATE
-      url_base: $TAP_EDCAST_URL_BASE
   - name: tap-zendesk
     variant: twilio-labs
     pip_url: git+https://github.com/twilio-labs/twilio-tap-zendesk

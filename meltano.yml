@@ -255,7 +255,6 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
       replication-key: created_at
       created_at:
         is-replication-key: true

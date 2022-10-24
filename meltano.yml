@@ -62,7 +62,6 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
       replication-key: __loaded_at
       __loaded_at:
         is-replication-key: true
@@ -268,7 +267,6 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
       replication-key: __loaded_at
       __loaded_at:
         is-replication-key: true

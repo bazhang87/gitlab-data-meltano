@@ -62,11 +62,10 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
       replication-key: __loaded_at
       __loaded_at:
         is-replication-key: true
-      primary-keys: ["ID"]
+      primary-keys: [ "ID" ]
     config:
       email: $TAP_ZENDESK_EMAIL
       start_date: $TAP_ZENDESK_START_DATE

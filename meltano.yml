@@ -340,12 +340,6 @@ schedules:
   transform: skip
   interval: '@daily'
   start_date: 2021-10-01
-- name: edcast-to-snowflake
-  extractor: tap-edcast
-  loader: target-snowflake--edcast
-  transform: skip
-  interval: '0 7 * * *'
-  start_date: 2021-12-01
 - name: zendesk-to-snowflake
   extractor: tap-zendesk
   loader: target-snowflake--edcast

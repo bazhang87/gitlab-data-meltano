@@ -341,7 +341,7 @@ schedules:
   extractor: tap-xactly
   loader: target-snowflake--edcast
   transform: skip
-  interval: '@daily'
+  interval: '00 0,5 * * *'
   start_date: 2021-07-13
 - name: zengrc-to-snowflake
   extractor: tap-zengrc

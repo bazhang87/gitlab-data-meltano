@@ -87,7 +87,6 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
       replication-key: __loaded_at
       __loaded_at:
         is-replication-key: true
@@ -104,7 +103,7 @@ plugins:
     - groups.name
     - groups.updated_at
     - groups.url
-    - group_memberships.* 
+    - group_memberships.*
     - macros.actions
     - macros.active
     - macros.created_at
@@ -278,14 +277,6 @@ plugins:
     - users.url
     - users.user_fields
     - users.verfied
-    metadata:
-    '*':
-      replication-method: INCREMENTAL
-    '*':
-      replication-key: created_at
-      created_at:
-        is-replication-key: true
-      primary-keys: ["ID"]
   - name: tap-zendesk--community-relations
     inherit_from: tap-zendesk
     config:
@@ -301,8 +292,7 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-    '*':
-      replication-key: __loaded_at 
+      replication-key: __loaded_at
       __loaded_at:
         is-replication-key: true
       primary-keys: ["ID"]
@@ -332,7 +322,7 @@ plugins:
   - name: target-snowflake--edcast
     variant: meltano
     inherit_from: target-snowflake
-    pip_url: git+https://gitlab.com/gitlab-data/edcast-target-snowflake
+    pip_url: git+https://gitlab.com/gitlab-data/target-snowflake-edcast
     config:
       account: gitlab
       database: RAW

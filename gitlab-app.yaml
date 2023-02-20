@@ -72,7 +72,7 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: tap_xactly_consumer
-        
+
         # Kubernetes Secrets :: zengrc
         - name: ZENGRC_USERNAME
           valueFrom:
@@ -84,8 +84,8 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: ZENGRC_PASSWORD
-        
-        # Kubernetes Secrets :: Adaptive 
+
+        # Kubernetes Secrets :: Adaptive
         - name: TAP_ADAPTIVE_USERNAME
           valueFrom:
             secretKeyRef:
@@ -177,7 +177,7 @@ spec:
             secretKeyRef:
               name: tap-secrets
               key: TAP_ZENDESK_COMMUNITY_RELATIONS_SUBDOMAIN
-  
+
         # Kubernetes Secrets :: Snowflake
         - name: SF_USER
           valueFrom:

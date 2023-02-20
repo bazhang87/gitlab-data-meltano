@@ -12,11 +12,6 @@ COPY ./meltano.yml .
 RUN meltano install
 RUN meltano upgrade files
 
-# Add Java JDK for
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
-    apt-get clean;
-
 # Pin `discovery.yml` manifest by copying cached version to project root
 RUN cp -n .meltano/cache/discovery.yml . 2>/dev/null || :
 

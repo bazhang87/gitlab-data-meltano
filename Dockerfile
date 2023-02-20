@@ -7,11 +7,6 @@ WORKDIR /projects
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-# To fix the pg_config executable not found error
-RUN apt-get update && \
-    apt-get install libpq-dev -y && \
-    apt-get clean;
-
 # Install all plugins into the `.meltano` directory
 COPY ./meltano.yml .
 RUN meltano install

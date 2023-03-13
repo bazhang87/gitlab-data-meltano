@@ -1,7 +1,7 @@
 provider "google" {
     project = "gitlab-analysis"
     region  = "us-west1"
-    zone    = "us-west1-a" 
+    zone    = "us-west1-a"
 }
 
 variable "environment" {
@@ -56,7 +56,7 @@ resource "google_container_node_pool" "meltano-pool" {
         image_type = "COS"
         disk_type = "pd-standard"
         disk_size_gb = 100
-        preemptible = false        
+        preemptible = false
     }
     upgrade_settings {
       max_surge=1

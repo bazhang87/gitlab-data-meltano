@@ -52,15 +52,11 @@ resource "google_container_node_pool" "meltano-pool" {
     cluster     = google_container_cluster.meltano_cluster.name
     node_count = 1
     node_config {
-        machine_type    = "e2-standard-4"
-        image_type = "COS"
+        machine_type    = "e2-standard-8"
+        image_type = "cos_containerd"
         disk_type = "pd-standard"
         disk_size_gb = 100
         preemptible = false
-    }
-    upgrade_settings {
-      max_surge=1
-      max_unavailable=0
     }
     management {
       auto_repair=true

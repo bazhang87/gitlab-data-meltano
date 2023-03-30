@@ -25,9 +25,6 @@ RUN apt-get update && \
 # Pin `discovery.yml` manifest by copying cached version to project root
 RUN cp -n .meltano/cache/discovery.yml . 2>/dev/null || :
 
-# Don't allow changes to containerized project files
-ENV MELTANO_PROJECT_READONLY 1
-
 # Copy over remaining project files
 COPY . .
 

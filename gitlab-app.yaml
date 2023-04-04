@@ -19,7 +19,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: meltano-production-tap
-        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.5
+        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.7
         imagePullPolicy: Always
         resources:
             limits:

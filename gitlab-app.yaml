@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gitlab-production-meltano
-  namespace: production
+  namespace: meltano
   labels:
     version: "1.0.0"
 spec:

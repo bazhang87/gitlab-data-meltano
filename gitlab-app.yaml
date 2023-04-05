@@ -9,16 +9,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: meltano-production-tap
+      app: meltano-tap
   template:
     metadata:
       labels:
-        app: meltano-production-tap
+        app: meltano-tap
     spec:
       serviceAccount: default
       serviceAccountName: default
       containers:
-      - name: meltano-production-tap
+      - name: meltano-tap
         image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.7
         imagePullPolicy: Always
         resources:

@@ -1,25 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gitlab-production-meltano
-  namespace: meltano
+  name: gitlab-testing-meltano
+  namespace: testing
   labels:
     version: "1.0.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: meltano-tap
+      app: meltano-testing-tap
   template:
     metadata:
       labels:
-        app: meltano-tap
+        app: meltano-testing-tap
     spec:
       serviceAccount: default
       serviceAccountName: default
       containers:
-      - name: meltano-tap
-        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.7
+      - name: meltano-testing-tap
+        #image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.4
+        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano/gitlab-data-meltano:new-meltano-namespace
         imagePullPolicy: Always
         resources:
             limits:
@@ -213,7 +214,7 @@ spec:
 
           # Replace DB_PORT with the port the proxy should listen on
           # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
-          - "-instances=gitlab-analysis:us-west1:meltano-data-ops-production=tcp:5432"
+          - "-instances=gitlab-analysis:us-west1:meltano-data-ops-testing-v2=tcp:5432"
 
           # This flag specifies where the service account key can be found
           - "-credential_file=/secrets/service_account.json"

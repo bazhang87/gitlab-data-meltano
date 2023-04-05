@@ -1,6 +1,5 @@
 version: 1
-send_anonymous_usage_stats: true
-project_id: 60140d5b-32f1-49b1-aa37-e7a48dd2ec43
+send_anonymous_usage_stats: false
 plugins:
   extractors:
   - name: tap-xactly
@@ -48,37 +47,14 @@ plugins:
       start_date: '2010-01-01T00:00:00Z'
       username: $TAP_ADAPTIVE_USERNAME
       password: $TAP_ADAPTIVE_PASSWORD
-  - name: tap-edcast
-    namespace: tap_edcast
-    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-edcast
-    executable: tap-edcast
-    capabilities:
-     - catalog
-     - discover
-     - state
-    settings:
-    - name: username
-      kind: string
-    - name: password
-      kind: password
-    - name: start_date
-      value: '1900-01-01T00:00:00Z'
-    - name: end_date
-      value: '2030-01-01T00:00:00Z'
-    - name: url_base
-      value: 'https://api.domo.com'
-    config:
-      username: $TAP_EDCAST_USERNAME
-      password: $TAP_EDCAST_PASSWORD
-      start_date: $TAP_EDCAST_START_DATE
-      end_date: $TAP_EDCAST_END_DATE
-      url_base: $TAP_EDCAST_URL_BASE
   - name: tap-zendesk
     variant: twilio-labs
     pip_url: git+https://github.com/twilio-labs/twilio-tap-zendesk
     executable: tap-zendesk
     capabilities:
-    - discover
+     - catalog
+     - discover
+     - state
     settings:
     - name: email
     - name: start_date
@@ -312,65 +288,72 @@ plugins:
     - users.*
   loaders:
   - name: target-snowflake
-    variant: meltano
-    pip_url: git+https://gitlab.com/meltano/target-snowflake
+    variant: transferwise
+    pip_url: pipelinewise-target-snowflake
     config:
       account: gitlab
-      database: RAW
+      dbname: RAW
       warehouse: LOADING
       role: MELTANO
-  - name: target-snowflake--edcast
-    variant: meltano
-    inherit_from: target-snowflake
-    pip_url: git+https://gitlab.com/gitlab-data/target-snowflake-edcast
-    config:
-      account: gitlab
-      database: RAW
-      warehouse: LOADING
-      role: MELTANO
-      username: $TARGET_EDCAST_SNOWFLAKE_USERNAME
+      user: $TARGET_EDCAST_SNOWFLAKE_USERNAME
       password: $TARGET_EDCAST_SNOWFLAKE_PASSWORD
+      file_format: MELTANO_FILE_FORMAT
+      default_target_schema: THIS_SCHEMA_DOES_NOT_EXIST
+  - name: target-snowflake--xactly
+    inherit_from: target-snowflake
+    config:
+      default_target_schema: TAP_XACTLY
+  - name: target-snowflake--adaptive
+    inherit_from: target-snowflake
+    config:
+      default_target_schema: TAP_ADAPTIVE
+  - name: target-snowflake--zengrc
+    inherit_from: target-snowflake
+    config:
+      default_target_schema: TAP_ZENGRC
+  - name: target-snowflake--zendesk
+    inherit_from: target-snowflake
+    config:
+      default_target_schema: TAP_ZENDESK
+  - name: target-snowflake--zendesk-community-relations
+    inherit_from: target-snowflake
+    config:
+      default_target_schema: TAP_ZENDESK__COMMUNITY_RELATIONS
   orchestrators:
   - name: airflow
-    pip_url: psycopg2 apache-airflow==1.10.13 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.13/constraints-3.8.txt
+    pip_url: psycopg2 apache-airflow==2.3.2 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.8.txt
   files:
   - name: airflow
     pip_url: git+https://gitlab.com/meltano/files-airflow.git
 schedules:
 - name: xactly-to-snowflake
   extractor: tap-xactly
-  loader: target-snowflake--edcast
+  loader: target-snowflake--xactly
   transform: skip
   interval: '00 0,5 * * *'
   start_date: 2021-07-13
 - name: zengrc-to-snowflake
   extractor: tap-zengrc
-  loader: target-snowflake--edcast
+  loader: target-snowflake--zengrc
   transform: skip
   interval: '0 */8 * * *'
   start_date: 2021-07-13
 - name: adaptive-to-snowflake
   extractor: tap-adaptive
-  loader: target-snowflake--edcast
+  loader: target-snowflake--adaptive
   transform: skip
   interval: '@daily'
   start_date: 2021-10-01
-- name: edcast-to-snowflake
-  extractor: tap-edcast
-  loader: target-snowflake--edcast
-  transform: skip
-  interval: '0 7 * * *'
-  start_date: 2021-12-01
 - name: zendesk-to-snowflake
   extractor: tap-zendesk
-  loader: target-snowflake--edcast
+  loader: target-snowflake--zendesk
   transform: skip
   interval: '0 4 * * *'
   start_date: 2012-12-30 00:00:00
 - name: zendesk-community-relations-to-snowflake
   extractor: tap-zendesk--community-relations
-  loader: target-snowflake--edcast
+  loader: target-snowflake--zendesk-community-relations
   transform: skip
   interval: '0 5 * * *'
   start_date: 2017-01-01 00:00:00
-
+project_id: 60140d5b-32f1-49b1-aa37-e7a48dd2ec43

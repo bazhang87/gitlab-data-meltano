@@ -8,4 +8,4 @@ key.json
 **/.terraform.*
 **/*.tfstate
 **/*.tfstate.*
-plan_to_apply
+**/*plan_to_apply*

@@ -1,4 +1,4 @@
-ARG MELTANO_IMAGE=meltano/meltano:v1.98.1-python3.8
+ARG MELTANO_IMAGE=meltano/meltano:v2.16.1-python3.8
 FROM $MELTANO_IMAGE
 
 WORKDIR /projects
@@ -24,9 +24,6 @@ RUN apt-get update && \
 
 # Pin `discovery.yml` manifest by copying cached version to project root
 RUN cp -n .meltano/cache/discovery.yml . 2>/dev/null || :
-
-# Don't allow changes to containerized project files
-ENV MELTANO_PROJECT_READONLY 1
 
 # Copy over remaining project files
 COPY . .

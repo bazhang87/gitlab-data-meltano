@@ -330,7 +330,7 @@ schedules:
   extractor: tap-xactly
   loader: target-snowflake--xactly
   transform: skip
-  interval: '00 0,5 * * *'
+  interval: '0 0,5 * * *'
   start_date: 2021-07-13
 - name: zengrc-to-snowflake
   extractor: tap-zengrc
@@ -342,7 +342,7 @@ schedules:
   extractor: tap-adaptive
   loader: target-snowflake--adaptive
   transform: skip
-  interval: '@daily'
+  interval: '0 4 * * *'
   start_date: 2021-10-01
 - name: zendesk-to-snowflake
   extractor: tap-zendesk

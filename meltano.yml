@@ -324,7 +324,7 @@ plugins:
     pip_url: psycopg2 apache-airflow==2.3.2 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.8.txt
   files:
   - name: airflow
-    pip_url: git+https://gitlab.com/meltano/files-airflow.git
+    pip_url: git+https://github.com/meltano/files-airflow.git
 schedules:
 - name: xactly-to-snowflake
   extractor: tap-xactly

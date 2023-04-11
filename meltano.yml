@@ -324,13 +324,13 @@ plugins:
     pip_url: psycopg2 apache-airflow==2.3.2 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.3.2/constraints-3.8.txt
   files:
   - name: airflow
-    pip_url: git+https://gitlab.com/meltano/files-airflow.git
+    pip_url: git+https://github.com/meltano/files-airflow.git
 schedules:
 - name: xactly-to-snowflake
   extractor: tap-xactly
   loader: target-snowflake--xactly
   transform: skip
-  interval: '00 0,5 * * *'
+  interval: '0 0,5 * * *'
   start_date: 2021-07-13
 - name: zengrc-to-snowflake
   extractor: tap-zengrc
@@ -342,7 +342,7 @@ schedules:
   extractor: tap-adaptive
   loader: target-snowflake--adaptive
   transform: skip
-  interval: '@daily'
+  interval: '0 4 * * *'
   start_date: 2021-10-01
 - name: zendesk-to-snowflake
   extractor: tap-zendesk

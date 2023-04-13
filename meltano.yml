@@ -299,6 +299,7 @@ plugins:
       password: $TARGET_EDCAST_SNOWFLAKE_PASSWORD
       file_format: MELTANO_FILE_FORMAT
       default_target_schema: THIS_SCHEMA_DOES_NOT_EXIST
+      add_metadata_columns: true
   - name: target-snowflake--xactly
     inherit_from: target-snowflake
     config:

@@ -63,8 +63,8 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-      replication-key: __loaded_at
-      __loaded_at:
+      replication-key: _sdc_batched_at
+      _sdc_batched_at:
         is-replication-key: true
       primary-keys: ["ID"]
     config:
@@ -268,8 +268,8 @@ plugins:
     metadata:
     '*':
       replication-method: INCREMENTAL
-      replication-key: __loaded_at
-      __loaded_at:
+      replication-key: _sdc_batched_at
+      _sdc_batched_at:
         is-replication-key: true
       primary-keys: ["ID"]
     select:

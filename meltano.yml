@@ -32,6 +32,7 @@ plugins:
       username: $ZENGRC_USERNAME
       password: $ZENGRC_PASSWORD
     select:
+    - '*.*'
     - vendors.*
     - '!vendors.owners'
     - '!vendors.contact'

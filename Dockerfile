@@ -17,7 +17,8 @@ COPY ./meltano.yml .
 RUN meltano install
 RUN meltano add orchestrator airflow
 RUN cd orchestrate/dags && \
-    rm meltano.py
+    rm meltano.py && \
+    meltano upgrade files
 
 # Add Java JDK for
 RUN apt-get update && \

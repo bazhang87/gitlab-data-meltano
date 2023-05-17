@@ -15,7 +15,9 @@ RUN apt-get update && \
 # Install all plugins into the `.meltano` directory
 COPY ./meltano.yml .
 RUN meltano install
-RUN meltano upgrade files
+RUN meltano add orchestrator airflow
+RUN cd orchestrate/dags && \
+    rm meltano.py
 
 # Add Java JDK for
 RUN apt-get update && \

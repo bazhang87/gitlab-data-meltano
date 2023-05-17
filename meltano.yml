@@ -20,7 +20,9 @@ plugins:
     pip_url: git+https://gitlab.com/gitlab-data/tap-zengrc
     executable: tap-zengrc
     capabilities:
-    - discover
+     - catalog
+     - discover
+     - state
     settings:
     - name: base_url
     - name: username
@@ -292,7 +294,7 @@ plugins:
     pip_url: pipelinewise-target-snowflake
     config:
       account: gitlab
-      dbname: RAW
+      dbname: RDEMIRI_PROD
       warehouse: LOADING
       role: MELTANO
       user: $TARGET_EDCAST_SNOWFLAKE_USERNAME

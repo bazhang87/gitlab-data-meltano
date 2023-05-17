@@ -20,9 +20,9 @@ plugins:
     pip_url: git+https://gitlab.com/gitlab-data/tap-zengrc
     executable: tap-zengrc
     capabilities:
-     - catalog
-     - discover
-     - state
+    - catalog
+    - discover
+    - state
     settings:
     - name: base_url
     - name: username
@@ -31,6 +31,10 @@ plugins:
       base_url: https://gitlab.api.zengrc.com/api/v2
       username: $ZENGRC_USERNAME
       password: $ZENGRC_PASSWORD
+    select:
+    - vendors.*
+    - '!vendors.owners'
+    - '!vendors.contact'
   - name: tap-adaptive
     namespace: tap_adaptive
     pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-adaptive

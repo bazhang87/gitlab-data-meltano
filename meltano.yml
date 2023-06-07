@@ -299,7 +299,7 @@ plugins:
     pip_url: pipelinewise-target-snowflake
     config:
       account: gitlab
-      dbname: RDEMIRI_PROD
+      dbname: RAW
       warehouse: LOADING
       role: MELTANO
       user: $TARGET_EDCAST_SNOWFLAKE_USERNAME

@@ -34,8 +34,8 @@ plugins:
     select:
     - '*.*'
     - vendors.*
-    - '!vendors.owners'
-    - '!vendors.contact'
+    - '!vendors.owners'  # excluded, as per https://gitlab.com/gitlab-data/analytics/-/issues/15830#note_1419865803
+    - '!vendors.contact' # excluded, as per https://gitlab.com/gitlab-data/analytics/-/issues/15830#note_1419865803
   - name: tap-adaptive
     namespace: tap_adaptive
     pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-adaptive

@@ -15,7 +15,6 @@ RUN apt-get update && \
 # Install all plugins into the `.meltano` directory
 COPY ./meltano.yml .
 RUN meltano install
-RUN meltano upgrade files
 
 # Add Java JDK for
 RUN apt-get update && \
@@ -27,6 +26,8 @@ RUN cp -n .meltano/cache/discovery.yml . 2>/dev/null || :
 
 # Copy over remaining project files
 COPY . .
+
+RUN meltano upgrade files
 
 # Expose default port used by `meltano ui`
 EXPOSE 5000

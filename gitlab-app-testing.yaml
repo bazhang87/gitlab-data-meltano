@@ -19,8 +19,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: meltano-testing-tap
-        #image: registry.gitlab.com/gitlab-data/gitlab-data-meltano:v.1.4
-        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano/gitlab-data-meltano:add-vendors-zengrc
+        image: registry.gitlab.com/gitlab-data/gitlab-data-meltano/gitlab-data-meltano:update_docker_steps
         imagePullPolicy: Always
         resources:
             limits:

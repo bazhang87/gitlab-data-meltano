@@ -36,24 +36,6 @@ plugins:
     - vendors.*
     - '!vendors.owners'  # excluded, as per https://gitlab.com/gitlab-data/analytics/-/issues/15830#note_1419865803
     - '!vendors.contact' # excluded, as per https://gitlab.com/gitlab-data/analytics/-/issues/15830#note_1419865803
-  - name: tap-adaptive
-    namespace: tap_adaptive
-    pip_url: git+https://gitlab.com/gitlab-data/meltano_taps.git#subdirectory=tap-adaptive
-    executable: tap-adaptive
-    capabilities:
-     - catalog
-     - discover
-     - state
-    settings:
-     - name: username
-     - name: password
-       kind: password
-     - name: start_date
-       value: '2010-01-01T00:00:00Z'
-    config:
-      start_date: '2010-01-01T00:00:00Z'
-      username: $TAP_ADAPTIVE_USERNAME
-      password: $TAP_ADAPTIVE_PASSWORD
   - name: tap-zendesk
     variant: twilio-labs
     pip_url: git+https://github.com/twilio-labs/twilio-tap-zendesk
@@ -311,10 +293,6 @@ plugins:
     inherit_from: target-snowflake
     config:
       default_target_schema: TAP_XACTLY
-  - name: target-snowflake--adaptive
-    inherit_from: target-snowflake
-    config:
-      default_target_schema: TAP_ADAPTIVE
   - name: target-snowflake--zengrc
     inherit_from: target-snowflake
     config:
@@ -346,12 +324,6 @@ schedules:
   transform: skip
   interval: '0 */8 * * *'
   start_date: 2021-07-13
-- name: adaptive-to-snowflake
-  extractor: tap-adaptive
-  loader: target-snowflake--adaptive
-  transform: skip
-  interval: '0 4 * * *'
-  start_date: 2021-10-01
 - name: zendesk-to-snowflake
   extractor: tap-zendesk
   loader: target-snowflake--zendesk
